@@ -1,2 +1,10 @@
-package com.example.datediary.diaryW.service;public class diaryServiceInterface {
+package com.example.datediary.diaryW.service;
+
+import org.springframework.stereotype.Service;
+
+
+public interface DiaryServiceInterface {
+
+
+
 }
