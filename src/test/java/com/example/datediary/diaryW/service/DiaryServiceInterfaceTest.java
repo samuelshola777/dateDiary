@@ -6,6 +6,7 @@ import com.example.datediary.diaryW.diaryExeption.DiaryExeption;
 import com.example.datediary.diaryW.diaryExeption.DiaryMonthExeption;
 import com.example.datediary.diaryW.diaryExeption.DiaryYearExeption;
 import com.example.datediary.diaryW.dto.DiaryRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,12 @@ DiaryDate date4;
         diaryRequest4.setBody("been feeling weak and down lately and can't actually point to a reason");
     }
 
-//    @AfterEach
-//    void tearDown() {
-//        diaryService.deleteAllDiaryWringing();
-//    }
+
+
+    @AfterEach
+    void tearDown() {
+      diaryService.deleteAllDiaryWringing();
+    }
     @Test
     void testThatWeCanWriteInDiary() throws DiaryExeption {
     diaryService.writeDiary(diaryRequest2);
@@ -81,7 +84,39 @@ DiaryDate date4;
         diaryService.deleteAllDiaryWringing();
         assertEquals(0,diaryService.count());
     }
+@Test
+    void testThatWeCanDeleteByIdentifier() throws DiaryExeption {
+    diaryService.writeDiary(diaryRequest1);
+    diaryService.writeDiary(diaryRequest2);
+    diaryService.writeDiary(diaryRequest3);
+    diaryService.writeDiary(diaryRequest4);
+    assertEquals(4, diaryService.count());
+        diaryService.deleteByIdentifier("Eagle");
+    assertEquals(3, diaryService.count());
+}
+@Test
+    void testThatWeCanUpDateDiaryPage() throws DiaryExeption {
+    diaryService.writeDiary(diaryRequest1);
+    diaryService.writeDiary(diaryRequest2);
+    diaryService.writeDiary(diaryRequest3);
+    diaryService.writeDiary(diaryRequest4);
+    assertEquals(4, diaryService.count());
+    String update = "i'm hungry";
+    diaryService.updateDiaryBody("fly",update);
+    assertEquals("been feeling weak and down lately and can't actually point to a reason, "+update, diaryService.findDiaryPageByIdentifier("fly").getBody());
+}
+@Test
+    void testThatWeCanUpDateTitle() throws DiaryExeption {
+    String update = "i'm hungry";
 
+    diaryService.writeDiary(diaryRequest2);
+    diaryService.writeDiary(diaryRequest3);
+    diaryService.writeDiary(diaryRequest4);
+    diaryService.writeDiary(diaryRequest1) ;
+    assertEquals(4, diaryService.count());
 
+    diaryService.updateTitle("Eagle",update);
+  assertEquals("the way i started java Script, "+update, diaryService.findDiaryPageByIdentifier("Eagle").getTitle());
+}
 
 }

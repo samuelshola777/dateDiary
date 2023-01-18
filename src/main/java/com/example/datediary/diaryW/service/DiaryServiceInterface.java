@@ -16,7 +16,13 @@ public interface DiaryServiceInterface {
 
     int count();
 
-    Diary findDiaryPageByIdentifier(String horse);
+    Diary findDiaryPageByIdentifier(String identifier);
 
     DiaryResponse deleteAllDiaryWringing();
+
+    String deleteByIdentifier(String identifier);
+
+    DiaryResponse updateDiaryBody(String fly, String update);
+
+    DiaryResponse updateTitle(String eagle, String update);
 }
